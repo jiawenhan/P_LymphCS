@@ -1,8 +1,8 @@
-# BH-LymphDS
+# P-LymphCS
 
 Code for the paper "Developing a Pathological Feature Extraction Network as the Backbone for the Lymphoma Classification System". This repository mainly contains the source code for lymphoma classification based on deep learning, which is used to extract the features of patch images. Subsequently, the multi-branch clustering-constrained attention multiple instance learning (CLAM) is employed to extract the features at the whole slide image (WSI) level as classifier to diagnose the lymphoma subtypes of slides. The CLAM algorithm can be found in [CLAM](https://github.com/mahmoodlab/CLAM/tree/master).
 
-![](Data/BH_LymphDS_overview.png?v=1&type=image)
+![](Data/P_LymphCS_overview.png?v=1&type=image)
 
 ## Folder Structure
 
