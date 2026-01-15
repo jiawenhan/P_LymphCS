@@ -1,0 +1,4 @@
+# ninja log v5
+1	13754	1759742802892740431	/root/autodl-tmp/MyOneKey/Pathology_WNT/kernels/selective_scan/build/temp.linux-x86_64-3.10/csrc/selective_scan/cusoflex/selective_scan_core_fwd.o	8d22b9cd9a9f5afc
+1	18946	1759742808076743919	/root/autodl-tmp/MyOneKey/Pathology_WNT/kernels/selective_scan/build/temp.linux-x86_64-3.10/csrc/selective_scan/cusoflex/selective_scan_oflex.o	86163fde2e12b30b
+0	46500	1759742835612771182	/root/autodl-tmp/MyOneKey/Pathology_WNT/kernels/selective_scan/build/temp.linux-x86_64-3.10/csrc/selective_scan/cusoflex/selective_scan_core_bwd.o	3ee547a6b76537f9
