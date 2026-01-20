@@ -837,7 +837,6 @@ class MambaSplitConv1dScanCombinedFn(torch.autograd.Function):
         return out if not return_final_states else (out, final_states)
 
     @staticmethod
-    # @torch.amp.custom_bwd(device_type='cuda')
     def backward(ctx, dout, *args):
         zxbcdt, conv1d_weight, conv1d_bias, out, A, D, dt_bias, initial_states, seq_idx, rmsnorm_weight, rstd, outproj_weight, outproj_bias = ctx.saved_tensors
         dfinal_states = args[0] if ctx.return_final_states else None
