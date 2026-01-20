@@ -164,7 +164,6 @@ def main(args):
                                  save_per_epoch=args.save_per_epoch)
 
 
-# Modify this parameter if necessary!
 DATA_ROOT = os.path.expanduser(r'./Label')
 
 if __name__ == "__main__":
