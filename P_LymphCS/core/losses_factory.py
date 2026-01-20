@@ -30,29 +30,14 @@ class CoxTimeDependentLoss(nn.Module):
         super(CoxTimeDependentLoss, self).__init__()
 
     def forward(self, risk_scores, y_true):
-        """
-        时间依赖的 Cox 比例风险模型的部分偏似然损失。
-
-        :param risk_scores: 风险分数。
-        :param events: 事件状态（1为事件发生，0为右侧删失）。
-        :param times: 每个样本的观察时间或生存时间。
-        :return: 损失值。
-        """
-
         times = y_true[:, 0]
         events = y_true[:, 1].bool()
         observed = events == 1
-
-        # 对风险分数应用指数转换
         risk_scores_exp = torch.exp(risk_scores)
-
-        # 计算每个观察到的事件的偏似然部分
         hazard_ratio = risk_scores_exp[observed]
         log_risk = torch.log(torch.tensor([risk_scores_exp[times >= t].sum() for t in times[observed]]))
         partial_likelihood = hazard_ratio - log_risk
-
         return -partial_likelihood.sum()
-
 
 class CoxPHLoss(torch.nn.Module):
     """Loss for CoxPH model. If data is sorted by descending duration, see `cox_ph_loss_sorted`.
