@@ -12,8 +12,6 @@ from P_LymphCS.custom.utils import GradCAM, show_cam_on_image, center_crop_img
 from P_LymphCS.models.vits.LpCTransVss import P_LymphCS
 
 
-
-# -------------------------- 修复后的reshape_transform --------------------------
 def reshape_transform(x):
     if isinstance(x, tuple):
         x = x[0]
@@ -23,8 +21,7 @@ def reshape_transform(x):
     elif len(x.shape) == 3:
         batch_size = x.shape[0]
         channels = x.shape[-1]
-        # patch_embeds[0] → 128×128, patch_embeds[1]→64×64, patch_embeds[2]→32×32, patch_embeds[3]→16×16
-        height, width = 16, 16  # patch_embeds[3]
+        height, width = 16, 16 
         return x.reshape(batch_size, height, width, channels)
     else:
         raise ValueError(f"Error：{x.shape}")
@@ -48,10 +45,6 @@ class ResizeTransform:
                            self.height,
                            self.width,
                            x.size(2))
-
-        # Bring the channels to the first dimension,
-        # like in CNNs.
-        # [batch_size, H, W, C] -> [batch, C, H, W]
         result = result.permute(0, 3, 1, 2)
 
         return result
