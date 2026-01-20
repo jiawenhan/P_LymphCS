@@ -294,7 +294,6 @@ def main(args):
                                             'device': str(device)}
                            )
 
-DATA_ROOT = os.path.expanduser(r'./Label')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='PyTorch Classification Training')
