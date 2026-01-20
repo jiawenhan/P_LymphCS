@@ -760,7 +760,6 @@ def mamba_conv1d_scan_ref(xBC, conv1d_weight, conv1d_bias, dt, A, chunk_size, D=
 class MambaSplitConv1dScanCombinedFn(torch.autograd.Function):
 
     @staticmethod
-    # @torch.amp.custom_fwd(device_type='cuda')
     def forward(ctx, zxbcdt, conv1d_weight, conv1d_bias, dt_bias, A, D, chunk_size, initial_states=None, seq_idx=None, dt_limit=(0.0, float("inf")), return_final_states=False, activation="silu",
                 rmsnorm_weight=None, rmsnorm_eps=1e-6, outproj_weight=None, outproj_bias=None, headdim=None,
                 ngroups=1, norm_before_gate=True):
