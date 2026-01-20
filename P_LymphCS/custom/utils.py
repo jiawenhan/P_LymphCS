@@ -133,7 +133,6 @@ class GradCAM:
         if self.cuda:
             input_tensor = input_tensor.cuda()
 
-        # 正向传播得到网络输出logits(未经过softmax)
         output = self.activations_and_grads(input_tensor)
         if isinstance(target_category, int):
             target_category = [target_category] * input_tensor.size(0)
@@ -148,15 +147,6 @@ class GradCAM:
         loss = self.get_loss(output, target_category)
         loss.backward(retain_graph=True)
 
-        # In most of the saliency attribution papers, the saliency is
-        # computed with a single target layer.
-        # Commonly it is the last convolutional layer.
-        # Here we support passing a list with multiple target layers.
-        # It will compute the saliency image for every image,
-        # and then aggregate them (with a default mean aggregation).
-        # This gives you more flexibility in case you just want to
-        # use all conv layers for example, all Batchnorm layers,
-        # or something else.
         cam_per_layer = self.compute_cam_per_layer(input_tensor)
         return self.aggregate_multi_layers(cam_per_layer)
 
