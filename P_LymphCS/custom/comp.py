@@ -49,19 +49,14 @@ def init_from_model(
 ):
     if isinstance(input_size, int):
         input_size = (input_size, input_size)
-    # Configuration of transformer.
     transform_config = {'phase': 'valid', 'input_size': input_size}
     transformer = create_standard_image_transformer(**transform_config)
-
-    # Configuration of core
-    # model_config = {'pretrained': False, 'model_name': config['model_name'], 'num_classes': config['num_classes']}
     model_config = {
         'model_name': model_name,
         'num_classes': num_classes
     }
     model = create_model(**model_config)
     model_path = os.path.join(model_path, 'P_LymphCS.pth')
-    # Configuration of device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
     state_dict = torch.load(model_path, map_location=device)['model_state_dict']
