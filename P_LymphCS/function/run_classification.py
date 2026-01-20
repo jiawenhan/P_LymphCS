@@ -162,9 +162,7 @@ def main(args):
                                                           'normalize_method': args.normalize_method},
                                             'device': str(device)},
                                  save_per_epoch=args.save_per_epoch)
-
-
-
+DATA_ROOT = os.path.expanduser(r'./Label')
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='PyTorch Classification Training')
 
