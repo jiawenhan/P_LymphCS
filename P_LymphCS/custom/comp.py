@@ -1,21 +1,10 @@
-# -*- coding: UTF-8 -*-
-# Authorized by Vlon Jang
-# Created on 2019/7/22
-# Home: www.medai.icu
-# Email: wangqingbaidu@gmail.com
-# Copyright 2015-2019 All Rights Reserved.
-# import argparse
-# import json
 import os
 from typing import Iterable
 
 import numpy as np
 import torch
-# from .image_loader import default_loader
 from P_LymphCS.core import create_model
 from P_LymphCS.core import create_standard_image_transformer
-
-os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 
 def extract(samples, model, transformer, device=None, fp=None):
