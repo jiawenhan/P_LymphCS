@@ -37,7 +37,24 @@ Run `main.py --predict` to predict the lymphoma subtype of patch level images. T
 ```Shell
 python main.py --predict --model_name LpCTransVss --image_data ./Data/input_images --label_dir ./Data/Label_Files --model_path ./Data/pretrained_Weight
 ```
-# Model Prediction CSV Format
+
+## Extract Patch Level Features
+
+Run `main.py --feature_extract` to extract image features. The parameters need to be modified in the `/function/Feature_Extract.py`. The output results are defaultly stored in the `/Output/Patch_Features`. You can use following command for feature extraction.
+
+```Shell
+python main.py --feature_extract --model_name LpCTransVss --image_data ./Data/input_images --label_dir ./Data/Label_Files --model_path ./Data/pretrained_Weight
+```
+
+## Visualization
+
+Run `main.py --gradcam` to perform heatmap visualization with GradCAM method. The parameters need to be modified in the `/function/GradCam.py`. The output results are defaultly stored in the `/Output/GradCam`. You can use following command for GradCAM visualization.
+
+```Shell
+python main.py --gradcam --model_name LpCTransVss --image_data ./Data/input_images --label_dir ./Data/Label_Files --model_path ./Data/pretrained_Weight
+```
+
+## Model Prediction CSV Format
 
 The model produces predictions for five classes. The first row contains the column headers, and each subsequent row represents one sample.
 
@@ -83,21 +100,6 @@ The probability columns are generated using Softmax. The sum of `prob_0` through
 The value of `predicted_label` is the index of the class with the highest probability. For example, if `prob_3` is the largest value, then `predicted_label` is `3`, corresponding to the `SBCL` class.
 
 Both `label` and `predicted_label` are stored as class indices rather than class names. Use the class mapping above to convert indices to class names.
-## Extract Patch Level Features
-
-Run `main.py --feature_extract` to extract image features. The parameters need to be modified in the `/function/Feature_Extract.py`. The output results are defaultly stored in the `/Output/Patch_Features`. You can use following command for feature extraction.
-
-```Shell
-python main.py --feature_extract --model_name LpCTransVss --image_data ./Data/input_images --label_dir ./Data/Label_Files --model_path ./Data/pretrained_Weight
-```
-
-## Visualization
-
-Run `main.py --gradcam` to perform heatmap visualization with GradCAM method. The parameters need to be modified in the `/function/GradCam.py`. The output results are defaultly stored in the `/Output/GradCam`. You can use following command for GradCAM visualization.
-
-```Shell
-python main.py --gradcam --model_name LpCTransVss --image_data ./Data/input_images --label_dir ./Data/Label_Files --model_path ./Data/pretrained_Weight
-```
 
 ## Reference and Acknowledgements
 
