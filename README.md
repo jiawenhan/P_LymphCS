@@ -37,7 +37,52 @@ Run `main.py --predict` to predict the lymphoma subtype of patch level images. T
 ```Shell
 python main.py --predict --model_name LpCTransVss --image_data ./Data/input_images --label_dir ./Data/Label_Files --model_path ./Data/pretrained_Weight
 ```
+# Model Prediction CSV Format
 
+The model produces predictions for five classes. The first row contains the column headers, and each subsequent row represents one sample.
+
+## CSV Format
+
+```csv
+label,prob_0,prob_1,prob_2,prob_3,prob_4,predicted_label
+```
+
+| Field | Description |
+|---|---|
+| `label` | Ground-truth class index |
+| `prob_0` | Predicted probability for class 0 |
+| `prob_1` | Predicted probability for class 1 |
+| `prob_2` | Predicted probability for class 2 |
+| `prob_3` | Predicted probability for class 3 |
+| `prob_4` | Predicted probability for class 4 |
+| `predicted_label` | Final predicted class index |
+
+## Class Mapping
+
+| Class Index | Class Name |
+|---:|---|
+| `0` | `NL` |
+| `1` | `TCL` |
+| `2` | `HL` |
+| `3` | `SBCL` |
+| `4` | `LBCL` |
+
+## Example
+
+```csv
+label,prob_0,prob_1,prob_2,prob_3,prob_4,predicted_label
+0,0.70,0.10,0.10,0.05,0.05,0
+1,0.05,0.80,0.05,0.05,0.05,1
+2,0.10,0.10,0.65,0.10,0.05,2
+3,0.05,0.10,0.10,0.70,0.05,3
+4,0.05,0.05,0.10,0.10,0.70,4
+```
+
+The probability columns are generated using Softmax. The sum of `prob_0` through `prob_4` for each sample should be approximately `1`.
+
+The value of `predicted_label` is the index of the class with the highest probability. For example, if `prob_3` is the largest value, then `predicted_label` is `3`, corresponding to the `SBCL` class.
+
+Both `label` and `predicted_label` are stored as class indices rather than class names. Use the class mapping above to convert indices to class names.
 ## Extract Patch Level Features
 
 Run `main.py --feature_extract` to extract image features. The parameters need to be modified in the `/function/Feature_Extract.py`. The output results are defaultly stored in the `/Output/Patch_Features`. You can use following command for feature extraction.
