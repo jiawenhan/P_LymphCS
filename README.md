@@ -54,11 +54,11 @@ Run `main.py --gradcam` to perform heatmap visualization with GradCAM method. Th
 python main.py --gradcam --model_name LpCTransVss --image_data ./Data/input_images --label_dir ./Data/Label_Files --model_path ./Data/pretrained_Weight
 ```
 
-## Model Prediction CSV Format
+## Model Prediction output CSV Format
 
 The model produces predictions for five classes. The first row contains the column headers, and each subsequent row represents one sample.
 
-## CSV Format
+## Output CSV Format
 
 ```csv
 label,prob_0,prob_1,prob_2,prob_3,prob_4,predicted_label
