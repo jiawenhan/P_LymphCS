@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local training output
+Output/
+MIL/results/
+MIL/experiments/
+MIL/wandb/

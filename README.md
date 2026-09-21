@@ -46,6 +46,29 @@ Run `main.py --feature_extract` to extract image features. The parameters need t
 python main.py --feature_extract --model_name LpCTransVss --image_data ./Data/input_images --label_dir ./Data/Label_Files --model_path ./Data/pretrained_Weight
 ```
 
+## Slide-Level MIL Training
+
+The `MIL/` directory provides MambaMIL, Attention MIL, CLAM-MB, TransMIL, S4MIL, Mean MIL, and Max MIL for slide-level classification from pre-extracted patch features. Install its dependencies and the vendored Mamba kernels as described in [`MIL/README.md`](MIL/README.md).
+
+Run MIL experiments through the repository's main entry point by adding `--mil`. All remaining arguments are forwarded to `MIL/main.py`:
+
+```shell
+python main.py --mil \
+  --task Lymph \
+  --data_root_dir /path/to/features \
+  --split_dir splits/Lymph_100 \
+  --results_dir results/Lymph \
+  --exp_code mamba_mil_dinov2 \
+  --model_type mamba_mil \
+  --mambamil_type SRMamba \
+  --backbone dinov2 \
+  --patch_size 512 \
+  --in_dim 768 \
+  --k 1
+```
+
+Use `python main.py --mil --help` to view all MIL options. The wrapper runs from the `MIL/` directory so that the included dataset metadata and split files resolve correctly.
+
 ## Visualization
 
 Run `main.py --gradcam` to perform heatmap visualization with GradCAM method. The parameters need to be modified in the `/function/GradCam.py`. The output results are defaultly stored in the `/Output/GradCam`. You can use following command for GradCAM visualization.

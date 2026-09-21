@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Virtual environments and local configuration
+.env
+.env.*
+.venv/
+venv/
+env/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Training outputs and experiment tracking
+results/
+experiments/
+wandb/
+runs/
+checkpoints/
+*.ckpt
+*.pth
+*.pt
+*.h5
+*.hdf5
+
+# Build artifacts
+build/
+dist/
+*.so
+*.pyd
+*.dll
+*.dylib
+
+# Local WSI feature directories
+Lymph/
+features/
+data/

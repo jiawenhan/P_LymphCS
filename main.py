@@ -1,13 +1,28 @@
 import os
 import argparse
+from pathlib import Path
+import subprocess
+import sys
 from collections import namedtuple
-from P_LymphCS.function.run_classification import main as clf_train
-from P_LymphCS.function.run_predict import main as clf_predict
-from P_LymphCS.function.Feature_Extract import feature_extract
-from P_LymphCS.function.GradCam import model_gradcam
+
+
+def run_mil(arguments):
+    """Run the MIL training entry point with its own working directory."""
+    mil_root = Path(__file__).resolve().parent / 'MIL'
+    mil_entry = mil_root / 'main.py'
+    if not mil_entry.is_file():
+        raise FileNotFoundError(f'MIL entry point not found: {mil_entry}')
+
+    subprocess.run(
+        [sys.executable, str(mil_entry), *arguments],
+        cwd=mil_root,
+        check=True,
+    )
 
 
 def train(model_name, data, label_dir, model_path):
+    from P_LymphCS.function.run_classification import main as clf_train
+
     data_pattern = os.path.join(data, 'images')
     train_f = os.path.join(label_dir, 'train.txt')
     val_f = os.path.join(label_dir, 'val.txt')
@@ -32,12 +47,13 @@ def train(model_name, data, label_dir, model_path):
                   iters_verbose=1,
                   save_per_epoch=False,
                   weights=weights)
-    # 训练模型
     Args = namedtuple("Args", params)
     clf_train(Args(**params))
 
 
 def predict(model_name, data, label_dir, model_path):
+    from P_LymphCS.function.run_predict import main as clf_predict
+
     data_pattern = os.path.join(data, 'images')
     test_f = os.path.join(label_dir, 'test.txt')
     labels_f = os.path.join(label_dir, 'labels.txt')
@@ -64,14 +80,18 @@ def predict(model_name, data, label_dir, model_path):
                   save_per_epoch=False,
                   weights=weights)
 
-    # 训练模型
     Args = namedtuple("Args", params)
     clf_predict(Args(**params))
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    if '--mil' in sys.argv[1:]:
+        mil_arguments = [argument for argument in sys.argv[1:] if argument != '--mil']
+        run_mil(mil_arguments)
+        raise SystemExit(0)
+
     parser = argparse.ArgumentParser(description='Configurations for BH_LymphDS')
+    parser.add_argument('--mil', action='store_true', help='Run slide-level MIL training')
     parser.add_argument('--train', action='store_true', help='Use pretrained core or not')
     parser.add_argument('--predict', action='store_true', help='Use pretrained core or not')
     parser.add_argument('--feature_extract', action='store_true', help='Use pretrained core or not')
@@ -88,7 +108,9 @@ if __name__ == '__main__':
     if args.predict:
         predict(model_name=args.model_name, data=args.image_data, label_dir=args.label_dir, model_path=args.model_path)
     if args.feature_extract:
+        from P_LymphCS.function.Feature_Extract import feature_extract
         feature_extract(model_name=args.model_name, data=args.image_data, model_path=args.model_path)
     if args.gradcam:
+        from P_LymphCS.function.GradCam import model_gradcam
         model_gradcam(model_path=args.model_path, data=args.image_data, target_category=args.target_category)
 
